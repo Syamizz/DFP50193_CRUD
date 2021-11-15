@@ -14,6 +14,11 @@ session_start();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    #btn{
+        background: black;
+    }
+</style>
 <body>
 <div class="col-md-12 ">
             <table align="center" style="width:1200px; line-height:40px;">
@@ -32,7 +37,7 @@ session_start();
                         <td><?php echo $rows['noMatrik'];?></td>
                         <td><?php echo $rows['kelas'];?></td>
                         <td><?php echo $rows['noKP'];?></td>
-                        <td><button><a href="edit.php">Edit</a></button></td>
+                        <td><button id="btn"><a href="edit.php">Edit</a></button></td>
                     </tr>
                 <?php
                 }
