@@ -1,50 +1,35 @@
 <?php
+session_start();
 
-if(isset($_POST['submit'])){
-    $nama = $_POST['nama'];
-    $noMatrik = $_POST['noMatrik'];
-    $kelas = $_POST['kelas'];
-    $noKP = $_POST['noKP'];
+    $con = mysqli_connect('localhost','root','','infopelajar');
+    $query="select * from infodata";
+    $result=mysqli_query($con,$query);
 
-    $mysqli = new mysqli('localhost', 'root', '', 'infopelajar');
-    $stmt = $mysqli->prepare("INSERT INTO info(nama,noMatrik,kelas,noKP) VALUES(?,?,?,?)");
-    $stmt->bind_param('ssss',$nama,$noMatrik,$kelas,$noKP);
-    $stmt->execute();
-    $stmt->close();
-    $mysqli->close();
-    header("Location: list.php");
-    die;
-}
 ?>
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
-  <head>
+<head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>CRUD</title>
-
-    
-  </head>
-
-    <style>
+    <title>Document</title>
+</head>
+<style>
+        *{
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
         body{
             background: skyblue;
             font-family: Arial, Helvetica, sans-serif;
         }
-
-        h1,h2{
-            color: black;
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
         }
-
 
         th{
-            width: 180px;
-            color: black;
+            background: orange;
         }
-
         #btn{
             background-image: linear-gradient(to right, #1FA2FF 0%, #12D8FA  51%, #1FA2FF  100%);
             margin: 10px;
@@ -65,43 +50,45 @@ if(isset($_POST['submit'])){
             text-decoration: none;
           }
     </style>
+<body>
+<form action="insert.php">
+    <input id="btn" type="submit" value="Insert data" />
+</form>
+<br><br><br>
 
-  <body>
-    <div class="container">
-        <h2>INFO PELAJAR</h2>
-        <hr>
-        <div class="row">
-           <div class="col-md-8">
-               <form method="post">
-                    <table>
-                        <tr>
-                            <th>Nama</th>
-                            <td><input required type="text" class="form-control" name="nama"></td>
-                        </tr>
-                        <tr>
-                            <th>No. Matrik</th>
-                            <td><input required type="text" class="form-control" minlength="12" maxlength="12" name="noMatrik"></td>
-                        </tr>
-                        <tr>
-                            <th>Kelas</th>
-                            <td><input required type="text" class="form-control" name="kelas"></td>
-                        </tr>
-                        <tr>
-                            <th>No. Kad Pengenalan</th>
-                            <td><input required type="text" class="form-control" minlength="12" maxlength="12" name="noKP"></td>
-                        </tr>
-                        
-                    </table>
-                    <hr>
-                    <div class="form-group">
-                       <button id="btn"name="submit" type="submit" class="btn btn-primary">Submit</button>
-                   </div>
-               </form>
-           </div>
-            
+<div class="col-md-12 ">
+            <table align="center" style="width:1200px; line-height:40px;">
+                <tr>
+                    <td>Id</td>
+                    <td>Nama</td>
+                    <td>No Matrik</td>
+                    <td>Kelas</td>
+                    <td>Kad Pengenalan</td>
+                    <td colspan='2'>Action</td>
+                </tr>
+                <?php
+                $bil=1;
+                while($rows=mysqli_fetch_assoc($result)){
+                    $id=$rows['id'];
+                    $nama=$rows['nama'];
+                    $noMatrik=$rows['noMatrik'];
+                    $kelas=$rows['kelas'];
+                    $noKP=$rows['noKP'];
+
+                    echo '<tr>';
+                    echo "<td>$bil</td>";
+                    echo "<td>$nama</td>";
+                    echo "<td>$noMatrik</td>";
+                    echo "<td>$kelas</td>";
+                    echo "<td>$noKP</td>";
+                    echo "<td> <a class='btn btn-success' href='update.php?up=$id'>Update</a></td>";
+                    echo "<td> <a class='btn btn-danger' href='delete.php?rn=$id'>Delete</a></td>";
+                    
+                    $bil++;
+                }
+                ?>
+                
+            </table>
         </div>
-    </div>
-   
-  </body>
-
+</body>
 </html>
