@@ -7,6 +7,7 @@ if(isset($_GET['up'])){
     $result=mysqli_query($conn,$query);
 
     if($rows=mysqli_fetch_assoc($result)){
+        $id=$rows['id'];
         $nama=$rows['nama'];
         $noMatrik=$rows['noMatrik'];
         $kelas=$rows['kelas'];
@@ -14,30 +15,7 @@ if(isset($_GET['up'])){
       }
 }
 
-if(isset($_POST['submit'])){
-    $conn = mysqli_connect('localhost','root','','infopelajar');
-    $nama = $_POST['nama'];
-    $noMatrik = $_POST['noMatrik'];
-    $kelas = $_POST['kelas'];
-    $noKP = $_POST['noKP'];
 
-    $query = "UPDATE infodata SET nama='$nama', noMatrik='$noMatrik', kelas='$kelas', noKP='$noKP' WHERE id='$noID' ";
-    
-    if($result=mysqli_query($conn,$query)){
-        ?>
-        <script>
-            alert('Data telah dikemaskini')
-            window.location='index.php'
-        </script>
-        <?php
-    }else{
-        ?>
-        <script>
-            alert('Data ralat')
-        </script>
-        <?php
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -62,7 +40,10 @@ if(isset($_POST['submit'])){
         <hr>
         <div class="row">
            <div class="col-md-8">
-               <form action="" method="post">
+               <?php 
+               echo "<form action='update_data.php?up=$noID' method='post'>"
+               ?>
+               
                     <table>
                         <tr>
                           <th>Nama</th>
@@ -74,14 +55,16 @@ if(isset($_POST['submit'])){
                         </tr>
                         <tr>
                           <th>Kelas</th>
-                          <td><input required type="text" class="form-control" name="kelas"  minlength="12" maxlength="12" value="<?php echo "$kelas"?>"></td>  
+                          <td><input required type="text" class="form-control" name="kelas"   value="<?php echo "$kelas"?>"></td>  
                         </tr>
                         <tr>
                           <th>No Kad Pengenalan</th>
-                          <td><input required type="text" class="form-control" name="noKP" value="<?php echo "$noKP"?>"></td>  
+                          <td><input required type="text" class="form-control" name="noKP" minlength="12" maxlength="12" value="<?php echo "$noKP"?>"></td>  
                         </tr>
+                        </table>
+                        <hr>
                         <div class="form-group">
-                       <button id="btn" name="submit" type="submit" class="btn btn-primary">Update</button>
+                            <button id="btn" name="submit" type="submit" class="btn btn-primary">Update</button>
                    </div>
                </form>
            </div>

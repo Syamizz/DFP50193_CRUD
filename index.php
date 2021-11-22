@@ -51,11 +51,7 @@ session_start();
           }
     </style>
 <body>
-<form action="insert.php">
-    <input id="btn" type="submit" value="Insert data" />
-</form>
-<br><br><br>
-
+<h1>Senarai pelajar</h1>
 <div class="col-md-12 ">
             <table align="center" style="width:1200px; line-height:40px;">
                 <tr>
@@ -88,7 +84,10 @@ session_start();
                 }
                 ?>
                 
-            </table>
+            </table><br><br><br>
+            <form action="insert.php">
+                <input  id="btn" type="submit" value="Insert data" />
+            </form>
         </div>
 </body>
 </html>
