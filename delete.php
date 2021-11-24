@@ -1,17 +1,10 @@
 <?php
-	$conn = mysqli_connect('localhost','root','','infopelajar');
+    require 'conn.php';
 	error_reporting(0);
 	$noMatrik = $_GET['rn'];
-    $query = "delete from infodata where id = '$noMatrik' ";
+    $sql = "DELETE FROM infodata where id = ? ";
 
-    $data=mysqli_query($conn,$query);
-    if($data){
-        ?><script>
-            alert("Data telah dipadam")
-            window.location='index.php'
-        </script><?php
-    }
-    else{
-        echo "<font color='red'><Failed to delete record from Database";
-    }
-    ?>
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('i', $noMatrik);
+    $stmt->execute();
+    header('location: index.php');

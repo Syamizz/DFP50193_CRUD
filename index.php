@@ -1,9 +1,8 @@
 <?php
 session_start();
-
-    $con = mysqli_connect('localhost','root','','infopelajar');
+require 'conn.php';
     $query="select * from infodata";
-    $result=mysqli_query($con,$query);
+    $result=mysqli_query($conn,$query);
 
 ?>
 <!DOCTYPE html>

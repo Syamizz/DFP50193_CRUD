@@ -1,18 +1,20 @@
 <?php
-$conn = mysqli_connect('localhost','root','','infopelajar');
+require 'conn.php';
 
 if(isset($_GET['up'])){
     $noID = $_GET['up'];
-    $query="SELECT * FROM infodata WHERE id=$noID";
-    $result=mysqli_query($conn,$query);
-
-    if($rows=mysqli_fetch_assoc($result)){
-        $id=$rows['id'];
-        $nama=$rows['nama'];
-        $noMatrik=$rows['noMatrik'];
-        $kelas=$rows['kelas'];
-        $noKP=$rows['noKP'];
-      }
+    $sql="SELECT * FROM infodata WHERE id=$noID";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $rows = $result->fetch_array();
+    
+    $id=$rows['id'];
+    $nama=$rows['nama'];
+    $noMatrik=$rows['noMatrik'];
+    $kelas=$rows['kelas'];
+    $noKP=$rows['noKP'];
+      
 }
 
 

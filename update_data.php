@@ -1,25 +1,25 @@
 <?php
-
-    $conn = mysqli_connect('localhost','root','','infopelajar');
-    $noID = $_GET['up'];
+    require 'conn.php';
+    
+    $id = $_GET['up'];
     $nama = $_POST['nama'];
     $noMatrik = $_POST['noMatrik'];
     $kelas = $_POST['kelas'];
     $noKP = $_POST['noKP'];
 
-    $query = "UPDATE infodata SET nama='$nama', noMatrik='$noMatrik', kelas='$kelas', noKP='$noKP' WHERE id='$noID' ";
-    
-    if($result=mysqli_query($conn,$query)){
+    $sql = "UPDATE infodata SET nama = ?, noMatrik = ?, kelas = ? , noKP=?  WHERE id =?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ssssi', $nama, $noMatrik,$kelas,$noKP,$id);
+    $stmt->execute();
+
+    if ($conn->error) {
         ?>
         <script>
-            alert('Data telah dikemaskini')
-            window.location='index.php'
+            alert('Maaf! Nama makanan tersebut sudah wujud dalam senarai');
+            window.location = 'index.php';
         </script>
         <?php
-    }else{
-        ?>
-        <script>
-            alert('Data ralat')
-        </script>
-        <?php
+        exit;
+    } else {
+        header('location: index.php');
     }

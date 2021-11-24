@@ -5,7 +5,8 @@ $dbuser = "root";
 $dbpass = "";
 $dbname = "infopelajar";
 
-if(!$con = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname))
+$conn = new mysqli($dbhost,$dbuser,$dbpass,$dbname);
+if(!$conn = mysqli_connect($dbhost,$dbuser,$dbpass,$dbname))
 {
     die("Failed to connect");
 }
